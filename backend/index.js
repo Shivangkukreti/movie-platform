@@ -27,8 +27,9 @@ async function main() {
 
 app.use(cors());
 app.use(express.json());
-app.use(clerkMiddleware());
 app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use(clerkMiddleware());
+
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, () => {
