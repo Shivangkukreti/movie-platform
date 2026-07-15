@@ -8,8 +8,10 @@ const inngest = new Inngest({ id: "my-app" });
 
 
 const syncusercreation = inngest.createFunction(
-    {id:"sync-user-from-clerk"},
-    {event:"clerk/user.created"},
+    {
+    id: "sync-user-created",
+    triggers: [{ event: "clerk/user.created" }],
+  },
     async ({event})=>{
         const {id,email_addresses,first_name,last_name,profile_image_url}=event.data
         const userdata={
@@ -23,8 +25,10 @@ const syncusercreation = inngest.createFunction(
 )
 
 const syncuserdeletion = inngest.createFunction(
-    {id:"sync-user-from-clerk"},
-    {event:"clerk/user.deleted"},
+    {
+    id: "sync-user-deleted",
+    triggers: [{ event: "clerk/user.deleted" }],
+  },
     async ({event})=>{
         const {id} = event.data
         await user.deleteOne({_id: id})
@@ -32,8 +36,10 @@ const syncuserdeletion = inngest.createFunction(
 )
 
 const syncuserupdate = inngest.createFunction(
-    {id:"sync-user-from-clerk"},
-    {event:"clerk/user.updated"},
+    {
+    id: "sync-user-updated",
+    triggers: [{ event: "clerk/user.updated" }],
+  },
     async ({event})=>{
         const {id,email_addresses,first_name,last_name,profile_image_url}=event.data
         const userdata={
