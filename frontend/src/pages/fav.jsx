@@ -6,9 +6,10 @@ import { dummyShowsData } from "../assets/assets";
 import { useEffect } from "react";
 
 function Favourite() {
-    let {myfav,setmyfav}=useContext(Appcontext)
+    let {myfav,setmyfav,fetchmyfav}=useContext(Appcontext)
     useEffect(()=>{
           window.scrollTo(0,0)
+          fetchmyfav()
        },[])
     return myfav.length > 0 ? (
         

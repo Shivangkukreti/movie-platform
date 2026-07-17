@@ -1,12 +1,9 @@
 const express = require('express');
-//const express=require('express')
-//const router=express.Router()  paste in the router pages
-//module.exports=router
+
 const app = express();
 const cors = require('cors');
 require('dotenv').config();
 const { clerkMiddleware } = require('@clerk/express');
-// const clerkweb = require('xyz'); 
 const mongoose = require('mongoose');
 const { inngest, functions } = require('./utils/inngestfile');
 const { serve } = require("inngest/express");
@@ -29,8 +26,14 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use(clerkMiddleware());
-
 app.use(express.urlencoded({ extended: true }));
+
+
+app.use('/api/show', require('./routes/showroute'));
+app.use('/api/movies', require('./routes/movieroute'));
+app.use('/api/booking', require('./routes/bookingroute'));
+app.use('/api/user', require('./routes/userroute'));
+app.use('/api/dashboard', require('./routes/dashroute'));
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);
@@ -39,5 +42,3 @@ app.listen(PORT, () => {
 app.get('/', (req, res) => {
   res.send('working');
 });
-
-// app.post('/webhooks', clerkweb); // write and require the file first

@@ -9,5 +9,6 @@ let userSchema=new Schema({
     image:{type:String,required:true},
 })
 
+
 let user=mongoose.model("user", userSchema)
 module.exports=user
