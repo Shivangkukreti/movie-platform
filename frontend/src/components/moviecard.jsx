@@ -10,7 +10,7 @@ function Card({ movie }) {
             <div className="text-gray-600 font-bold inline">
                 {movie.genres.map((ele,index)=>{
                 return(
-                    <span key={index}>{ele.name} | </span>
+                    <span key={index}> {Object.values(ele)} | </span>
                 )
 
             })}<span className="inline">{Math.floor(movie.runtime/60)}h {movie.runtime%60}m </span>

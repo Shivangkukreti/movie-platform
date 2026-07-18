@@ -4,69 +4,106 @@ import Blurcircle from "../components/blurcircle";
 import { useContext } from "react";
 import { Appcontext } from "../context";
 import { assets, dummyDateTimeData } from "../assets/assets";
+import { toast } from "react-toastify";
+import { getToken } from "@clerk/react";
+import axios from "axios";
 
 function Seatlayout() {
   let { id, date } = useParams();
-  let {mybookings,setmybookings}=useContext(Appcontext)
-  const [formdata, setform] = useState({
-    movieid: id,
-    date,
-    seatnumber: [],
-    time: null,
-  });
+  let { mybookings, setmybookings, activeshows, api, getmybookings } =
+    useContext(Appcontext);
+  let [myshows, setmyshows] = useState([]);
+  let [showid, setshowid] = useState(null);
+  let [selectedTime, setselectedTime] = useState(null);
+  let [occupiedSeats, setOccupiedSeats] = useState([]);
   let [availableTimes, setavailableTimes] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
 
-  useEffect(() => {
-    Object.entries(dummyDateTimeData).forEach(([key, value]) => {
-      if (key == date) {
-        setavailableTimes(value);
+  
+  async function getoccupiedseats() {
+    try {
+      let { data } = await axios.get(api + "/show/getoccupiedseats/" + showid);
+      if (data.success) {
+        let occupiedSeats = data.seats;
+        setOccupiedSeats(occupiedSeats);
+        // console.log(occupiedSeats);
+        
+      } else {
+        toast.error(data.message);
       }
-    });
-    window.scrollTo(0, 0);
-  }, [id, date]);
-
-  function handleall(event) {
-    const { name, value } = event.target;
-    setform((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    console.log(formdata);
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
-  function handlesubmit(event) {
-    event.preventDefault();
-    console.log(formdata);
-    setmybookings((prev) => [...prev, formdata]);
-    setform({
-      movieid: id,
-      date,
-      seatnumber: [],
-      time: null,
-    });
+  useEffect(() => {
+    let x = activeshows?.filter(
+      (ele) => ele.movie._id == id && ele.showDateTime.slice(0, 10) == date,
+    );
+    x ? setmyshows(x) : setmyshows([]);
+    let times = x?.map((ele) => ele.showDateTime);
+    times ? setavailableTimes(times) : setavailableTimes([]);
+
+    window.scrollTo(0, 0);
+  }, [id, date, activeshows]);
+
+
+  useEffect(() => {
+  if (!selectedTime) return;
+
+  const show = myshows.find(
+    ele => ele.showDateTime === selectedTime
+  );
+
+  if (show) {
+    setshowid(show._id);
+  }
+}, [selectedTime, myshows]);
+useEffect(() => {
+  if (!showid) return;
+
+  getoccupiedseats();
+}, [showid]);
+
+  async function handlesubmit(event) {
+    if (!showid) {
+      toast.error("Please select a time slot.");
+      return;
+    }
+    try {
+      let { data } = await axios.post(
+        api + "/booking/bookshow",
+        {
+          showid: showid,
+          selectedseats: selectedSeats,
+        },
+        { headers: { Authorization: `Bearer ${await getToken()}` } },
+      );
+      if (data.success) {
+        window.location.href = data.url;
+        getmybookings();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
     setSelectedSeats([]);
   }
 
   const handleSeatClick = (seatId) => {
-    if (!formdata.time) {
-      alert("Please select a time slot first.");
+    if (!selectedTime) {
+      toast.error("Please select a time slot first.");
       return;
     }
-    if(selectedSeats.length >= 5 && !selectedSeats.includes(seatId)) {
-      alert("You can select a maximum of 5 seats.");
+    if (selectedSeats.length >= 5 && !selectedSeats.includes(seatId)) {
+      toast.error("You can select a maximum of 5 seats.");
       return;
     }
     setSelectedSeats((prev) => {
       const updated = prev.includes(seatId)
         ? prev.filter((seat) => seat !== seatId)
         : [...prev, seatId];
-
-      setform((form) => ({
-        ...form,
-        seatnumber: updated,
-      }));
-      
 
       return updated;
     });
@@ -82,13 +119,20 @@ function Seatlayout() {
             <button
               key={seatId}
               type="button"
+              
               onClick={() => handleSeatClick(seatId)}
               className={`h-9 w-9 rounded border text-sm transition-all duration-200
               ${
                 selectedSeats.includes(seatId)
-                  ? "bg-[#f84565] border-[#f84565] text-white"
-                  : "border-gray-500 hover:bg-[#f84565]/20"
-              }`}
+                  ? "bg-[#f84565] border-[#f84565] text-white "
+                  : "border-gray-500 hover:bg-[#f84565]/20 "
+              }
+              ${
+                occupiedSeats.includes(seatId)
+                  ? "bg-gray-500 border-gray-500 text-white cursor-not-allowed"
+                  : ""
+              }
+              `}
             >
               {seatId}
             </button>
@@ -111,11 +155,11 @@ function Seatlayout() {
               <button
                 name="time"
                 value={ele}
-                onClick={handleall}
+                onClick={() => setselectedTime(ele)}
                 key={idx}
                 className={
                   "border-2 rounded  cursor-pointer p-2 border-rose-400/20" +
-                  (formdata.time === ele ? " bg-rose-400/20" : "")
+                  (selectedTime === ele ? " bg-rose-400/20" : "")
                 }
               >
                 {new Date(ele).toLocaleTimeString("en", {
@@ -142,7 +186,10 @@ function Seatlayout() {
             {renderSeats("F")}
           </div>
         </div>
-        <button onClick={handlesubmit} className="bg-[#f84565] duration-500 w-fit mx-auto  p-3 mt-5 rounded">
+        <button
+          onClick={handlesubmit}
+          className="bg-[#f84565] duration-500 w-fit mx-auto  p-3 mt-5 rounded"
+        >
           Payment
         </button>
       </div>

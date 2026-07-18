@@ -29,11 +29,12 @@ const checkseats = async (showId, selectedSeats) => {
 };
 
 
- const authcheck = async (req, res) => {
+ const authcheck = async (req, res,next) => {
   let {isAuthenticated,userId}=getAuth(req);
   if(!isAuthenticated){
     return res.json({success: false,message: "User not authenticated.",});
   }
+  next();
 }
 
 

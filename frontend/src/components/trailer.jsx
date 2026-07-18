@@ -5,7 +5,7 @@ import ReactPlayer from "react-player";
 
 function Trailer() {
   let [trailers, settrailers] = useState(dummyTrailers[0]);
-  console.log(trailers);
+
   return (
     <div className=" flex flex-col relative  gap-4 px-[5%] lg:px-[10%] my-20 ">
       <h2 className="font-bold text-3xl my-20">Trailers</h2>

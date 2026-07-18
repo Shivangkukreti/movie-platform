@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Appcontext } from "../context";
 import { assets } from "../assets/assets";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   DatabaseSearch,
   ListCheckIcon,
@@ -10,14 +11,22 @@ import {
   PlusSquare,
 } from "lucide-react";
 import Blurcircle from "../components/blurcircle";
+import { useUser } from "@clerk/react";
 
 function Dash() {
  
+let {user,isLoaded}=useUser()
   let goto = useNavigate();
+
   useEffect(() => {
-    goto("/admin/dashboard");
-    
-  }, []);
+     if (!isLoaded) return;
+    // console.log(user);
+    if (!user) {
+      toast.error("Please login to access admin dashboard");
+      goto("/");
+    }
+  }, [user]);
+
 
   return (
     <>

@@ -1,6 +1,11 @@
 import { dummyDashboardData } from "../assets/assets";
+import { useContext } from "react";
+import { Appcontext } from "../context";
 
 function Listshows() {
+    let {activeshows}=useContext(Appcontext)
+
+    
     return ( 
         <>
         <h1 className="text-4xl">List <p className="text-rose-600 inline">Shows</p></h1>
@@ -15,7 +20,9 @@ function Listshows() {
             </thead>
             <tbody>
                 {
-                    dummyDashboardData.activeShows.map((item,index)=>{
+                    
+                    
+                    activeshows?activeshows.map((item,index)=>{
                         return(
                             <tr key={index} className="border-b max-md:text-xs border-rose-600/30">
                                 <td className="p-3 ">{item.movie.title}</td>
@@ -25,7 +32,7 @@ function Listshows() {
                             </tr>
                         )
                     })
-                }
+                :<tr><td className="text-center text-gray-500 py-4">No shows available.</td></tr>}
             </tbody>
         </table>
         </>

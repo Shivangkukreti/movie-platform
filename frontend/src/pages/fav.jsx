@@ -4,12 +4,13 @@ import Blurcircle from "../components/blurcircle";
 import Card from "../components/moviecard";
 import { dummyShowsData } from "../assets/assets";
 import { useEffect } from "react";
+import Loading from "../components/loading";
 
 function Favourite() {
-    let {myfav,setmyfav,fetchmyfav}=useContext(Appcontext)
+    let {myfav,setmyfav}=useContext(Appcontext)
     useEffect(()=>{
           window.scrollTo(0,0)
-          fetchmyfav()
+         
        },[])
     return myfav.length > 0 ? (
         
@@ -19,18 +20,16 @@ function Favourite() {
             <div className=" grid md:grid-cols-2 z-20 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-10 w-full">
             {
                 myfav.map((ele,index)=>{
-                     const movie = dummyShowsData.find((m) => m._id === ele)
+                 
                     return(
-                        <Card movie={movie} key={index} />
+                        <Card movie={ele} key={index} />
                     )
                 })}
             </div>
              <Blurcircle bottom="0%" right="0%"></Blurcircle>
         </div>
      ) : (
-        <div className="flex flex-col items-center justify-center h-full py-20">
-            <h2 className="font-bold text-3xl my-20" >You haven't liked any movies yet</h2>
-        </div>
+        <Loading></Loading>
      );
 }
 

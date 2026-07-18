@@ -3,8 +3,9 @@ const movies = require("../models/movie");
 const show = require("../models/show");
 const router = express.Router();
 const { requireAuth } = require("@clerk/express");
+const { authcheck } = require("../utils/myfunc");
 
-router.post("/addshow", async (req, res) => {
+router.post("/addshow",authcheck, async (req, res) => {
   try {
     const { movieid, price, time } = req.body;
     let x = await movies.findById(movieid);

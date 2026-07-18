@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import { dummyBookingData } from "../assets/assets";
 import Blurcircle from "../components/blurcircle";
-
+import { Appcontext } from "../context";
+import { useContext } from "react";
+import Loading from "../components/loading";
 
 function Mybookings() {
-    let [mybookings,setmybookings]=useState([])
-
-    async function getmybooking(params) {
-        setmybookings(dummyBookingData)
-    }
-    console.log(mybookings);
+    let {mybookings,setmybookings}=useContext(Appcontext)
     
-   useEffect(()=>{
-    getmybooking()
-   },[])
-
-    return (
+    // console.log(mybookings);
+    
+   
+    return mybookings ? (
      
         <div className="p-[10%] grid grid-cols-2 max-lg:grid-cols-1 gap-5">
             <Blurcircle top="10%" left="45%"></Blurcircle>
@@ -30,14 +26,14 @@ function Mybookings() {
                     </div>
                     <div className="flex flex-col justify-center gap-3 items-center">
                         <h3 className="text-lg text-end [word-spacing:0.5em] font-bold">Seats : {x.bookedSeats} ( {x.bookedSeats.length} ) </h3>
-                        <h3 className="text-lg text-end font-bold">Total : ${x.show.showPrice}</h3>
+                        <h3 className="text-lg text-end font-bold">Total : ${x.amount}</h3>
                         {x.isPaid?<p className="text-green-500 font-bold">Paid</p>:<button className="bg-[#007bff] p-2 rounded-2xl font-bold">Pay Now</button>}
                     </div>
                 </div>
             ))}
         </div> 
         
-     );
+     ) : <Loading></Loading>;
 }
 
 export default Mybookings;

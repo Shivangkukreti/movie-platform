@@ -3,8 +3,14 @@ import Blurcircle from "../components/blurcircle";
 import Card from "../components/moviecard";
 import { dummyShowsData } from "../assets/assets";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { Appcontext } from "../context";
+import Loading from "../components/loading";
 
 function Movies() {
+    let {allshows}=useContext(Appcontext)
+    // console.log(allshows);
+    
      useEffect(()=>{
           window.scrollTo(0,0)
        },[])
@@ -15,11 +21,11 @@ function Movies() {
             <Blurcircle top="0%" left="0%"></Blurcircle>
             <div className=" grid md:grid-cols-2 z-20 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-10 w-full">
             {
-                dummyShowsData.map((ele,index)=>{
+                allshows?allshows.map((ele,index)=>{
                     return(
                         <Card movie={ele} key={index} />
                     )
-                })}
+                }):<Loading></Loading>}
             </div>
              <Blurcircle bottom="0%" right="0%"></Blurcircle>
         </div>

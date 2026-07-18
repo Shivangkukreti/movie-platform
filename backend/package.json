@@ -17,6 +17,8 @@
     "express": "^5.2.1",
     "exrpess": "^0.0.1-security",
     "inngest": "^4.12.1",
-    "mongoose": "^9.7.4"
+    "mongoose": "^9.7.4",
+    "stripe": "^22.3.2",
+    "svix": "^1.98.0"
   }
 }

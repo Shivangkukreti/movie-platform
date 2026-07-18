@@ -32,7 +32,7 @@ function Navbar() {
             <NavLink onClick={()=>setshow(false)} to={"/"} className={({isActive})=>isActive?"text-[#f84565] underline-offset-5 duration-500 underline":"text-white"}>Home</NavLink>
             <NavLink onClick={()=>setshow(false)} to={"/movies"} className={({isActive})=>isActive?"text-[#f84565] underline-offset-5 duration-500 underline":"text-white"}>Movies</NavLink>
             <NavLink onClick={()=>setshow(false)} to={"/favourite"} className={({isActive})=>isActive?"text-[#f84565] underline-offset-5 duration-500 underline":"text-white"}>Favourites</NavLink>
-            <NavLink onClick={()=>setshow(false)} to={"/releases"} className={({isActive})=>isActive?"text-[#f84565] underline-offset-5 duration-500 underline":"text-white"}>Releases</NavLink>
+            <NavLink onClick={()=>setshow(false)} to={"/admin"} className={({isActive})=>isActive?"text-[#f84565] underline-offset-5 duration-500 underline":"text-white"}>Dashboard</NavLink>
            </div>
 
 
