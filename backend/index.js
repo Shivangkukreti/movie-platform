@@ -21,7 +21,7 @@ main().then(() => {
 async function main() {
   await mongoose.connect(uri); 
 }
-app.post('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
+app.use('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
 
 app.use(cors());
 app.use(express.json());
