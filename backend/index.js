@@ -21,6 +21,7 @@ main().then(() => {
 async function main() {
   await mongoose.connect(uri); 
 }
+app.use('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
 
 app.use(cors());
 app.use(express.json());
@@ -28,7 +29,7 @@ app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use(clerkMiddleware());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
+
 app.use('/api/show', require('./routes/showroute'));
 app.use('/api/movies', require('./routes/movieroute'));
 app.use('/api/booking', require('./routes/bookingroute'));
