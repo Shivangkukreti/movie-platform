@@ -7,7 +7,7 @@ const { clerkMiddleware } = require('@clerk/express');
 const mongoose = require('mongoose');
 const { inngest, functions } = require('./utils/inngestfile');
 const { serve } = require("inngest/express");
-const stripewebhook = require('./utils/stripewebhook');
+const stripewebhook = require('./utils/stripewebhook.js');
 
 const uri = process.env.MONGO_URL; 
 const PORT = process.env.PORT || 5000;
@@ -21,7 +21,7 @@ main().then(() => {
 async function main() {
   await mongoose.connect(uri); 
 }
-app.use('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
+app.post('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
 
 app.use(cors());
 app.use(express.json());
