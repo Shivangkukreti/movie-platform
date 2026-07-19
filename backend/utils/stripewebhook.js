@@ -48,12 +48,12 @@ const stripewebhook = async (req, res) => {
                     { new: true }
                 );
 
-                await inngest.send({
-                    name: "app/send-email",
-                    data: {
-                        bookingId: bookingId,
-                    },
-                });
+                // await inngest.send({
+                //     name: "app/send-email",
+                //     data: {
+                //         bookingId: bookingId,
+                //     },
+                // });
 
                 break;
             }
