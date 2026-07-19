@@ -82,31 +82,26 @@ const releaseBooking = inngest.createFunction(
 
 
 const deleteoldshowsandbookings = inngest.createFunction(
-    {
+  {
     id: "delete-old-shows-and-bookings",
     triggers: [{ cron: "0 0 * * *" }],
-    },
-    
-    async ({step})=>{
-        const afteroneday = new Date(Date.now() + 24 * 60 * 60 * 1000);
-        await step.sleepUntil('wait-for-1-day',afteroneday) // 1 day ago    
-    await step.run('deleteoldshowsandbookings', async()=>{
-        const currentDate = new Date();
-        const oldShows = await show.find({ showDateTime: { $lt: currentDate } });
-        const oldBookings = await booking.find({ createdAt: { $lt: currentDate } });
+  },
+  async () => {
+    const currentDate = new Date();
 
-        // Delete old shows and their associated bookings
-        for (const show of oldShows) {
-            await booking.deleteMany({ show: show._id });
-            await show.deleteOne();
-        }
-
-        // Delete old bookings
-        for (const booking of oldBookings) {
-            await booking.deleteOne();
-        }
+    const oldShows = await show.find({
+      showDateTime: { $lt: currentDate },
     });
-})
+
+    for (const oldShow of oldShows) {
+      await booking.deleteMany({
+        show: oldShow._id,
+      });
+
+      await oldShow.deleteOne();
+    }
+  }
+);
 
 
 const sentemail = inngest.createFunction(
