@@ -28,7 +28,7 @@ app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use(clerkMiddleware());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
+app.use('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
 app.use('/api/show', require('./routes/showroute'));
 app.use('/api/movies', require('./routes/movieroute'));
 app.use('/api/booking', require('./routes/bookingroute'));
