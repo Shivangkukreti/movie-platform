@@ -84,10 +84,9 @@ const releaseBooking = inngest.createFunction(
 const deleteoldshowsandbookings = inngest.createFunction(
     {
     id: "delete-old-shows-and-bookings",
+    triggers: [{ cron: "0 0 * * *" }],
     },
-    {
-        cron: "0 0 * * *", // Runs every day at midnight
-    },
+    
     async ({step})=>{
         const afteroneday = new Date(Date.now() + 24 * 60 * 60 * 1000);
         await step.sleepUntil('wait-for-1-day',afteroneday) // 1 day ago    
@@ -111,29 +110,34 @@ const deleteoldshowsandbookings = inngest.createFunction(
 
 
 const sentemail = inngest.createFunction(
-    {
+  {
     id: "send-email",
     triggers: [{ event: "app/send-email" }],
-    },
-    async ({event})=>{
-        let {bookingId}=event.data
-        let x=await booking.findById(bookingId).populate("user")
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
   },
-});
-let mail={
-    from:process.env.SENDER_EMAIL,
-    to:x.user.email,
-    subject:"booking confirmed",
-    text:"enjoy your show",
-}
-await transporter.sendMail(mail) })
+  async ({ event }) => {
+    const { bookingId } = event.data;
 
+    const x = await booking.findById(bookingId).populate("user");
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp-relay.brevo.com",
+      port: 587,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
+    const mail = {
+      from: process.env.SENDER_EMAIL,
+      to: x.user.email,
+      subject: "Booking confirmed",
+      text: "Enjoy your show",
+    };
+
+    await transporter.sendMail(mail);
+  }
+);
 
 const functions = [syncusercreation, syncuserdeletion, syncuserupdate, releaseBooking, deleteoldshowsandbookings];
 
