@@ -139,6 +139,6 @@ const sentemail = inngest.createFunction(
   }
 );
 
-const functions = [syncusercreation, syncuserdeletion, syncuserupdate, releaseBooking, deleteoldshowsandbookings];
+const functions = [syncusercreation, syncuserdeletion, syncuserupdate, releaseBooking, deleteoldshowsandbookings, sentemail];
 
 module.exports = { inngest, functions };
