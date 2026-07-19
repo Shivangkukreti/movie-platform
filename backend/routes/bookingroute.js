@@ -5,6 +5,7 @@ const booking = require('../models/booking');
 const router=express.Router() 
 const { getAuth } = require('@clerk/express');
 const stripe = require('stripe');
+const { inngest } = require('../utils/inngestfile');
 
 
 router.post('/bookshow',authcheck,async(req,res)=>{
@@ -37,6 +38,12 @@ router.post('/bookshow',authcheck,async(req,res)=>{
         })
         await x.save();
         await newbooking.save();
+        await inngest.send({
+            name: "app/checkpayment",
+            data: {
+                bookingId: newbooking._id.toString()
+            }
+        });
         const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
         const line_items = [
             {

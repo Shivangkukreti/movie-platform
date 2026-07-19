@@ -1,6 +1,7 @@
-const { Inngest } = require("inngest");
-const user=require("../models/user")
-
+const { Inngest, cron } = require("inngest");
+const user=require("../models/user");
+const booking = require("../models/booking");
+const nodemailer=require('nodemailer')
 // Create a client to send and receive events
 const inngest = new Inngest({ id: "my-app" });
 
@@ -52,7 +53,88 @@ const syncuserupdate = inngest.createFunction(
     }
 )
 
+const releaseBooking = inngest.createFunction(
+    {
+    id: "release-booking",
+    triggers: [{ event: "app/checkpayment" }],
+    },
+    async ({event,step})=>{
+        const aftertenminutes = new Date(Date.now() + 10 * 60 * 1000);
+        await step.sleepUntil('wait-for-10-min',aftertenminutes) // 10 minutes ago
+        await step.run('checkpayment', async()=>{
+            const bookingId = event.data.bookingId;
+            const book=await booking.findById(bookingId)
+            if(book && !book.isPaid){
+                // Release the booking
+                const myshow=await show.findById(book.show)
+                if(myshow){
+                    book.bookedSeats.forEach((seat)=>{
+                        delete myshow.occupiedSeats[seat]
+                    })
+                    myshow.markModified("occupiedSeats");
+                    await myshow.save();
+                    await booking.findByIdAndDelete(bookingId);
+                }
+            }
+        });
+    })
 
-const functions = [syncusercreation, syncuserdeletion, syncuserupdate];
+
+
+const deleteoldshowsandbookings = inngest.createFunction(
+    {
+    id: "delete-old-shows-and-bookings",
+    },
+    {
+        cron: "0 0 * * *", // Runs every day at midnight
+    },
+    async ({step})=>{
+        const afteroneday = new Date(Date.now() + 24 * 60 * 60 * 1000);
+        await step.sleepUntil('wait-for-1-day',afteroneday) // 1 day ago    
+    await step.run('deleteoldshowsandbookings', async()=>{
+        const currentDate = new Date();
+        const oldShows = await show.find({ showDateTime: { $lt: currentDate } });
+        const oldBookings = await booking.find({ createdAt: { $lt: currentDate } });
+
+        // Delete old shows and their associated bookings
+        for (const show of oldShows) {
+            await booking.deleteMany({ show: show._id });
+            await show.deleteOne();
+        }
+
+        // Delete old bookings
+        for (const booking of oldBookings) {
+            await booking.deleteOne();
+        }
+    });
+})
+
+
+const sentemail = inngest.createFunction(
+    {
+    id: "send-email",
+    triggers: [{ event: "app/send-email" }],
+    },
+    async ({event})=>{
+        let {bookingId}=event.data
+        let x=await booking.findById(bookingId).populate("user")
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+let mail={
+    from:process.env.SENDER_EMAIL,
+    to:x.user.email,
+    subject:"booking confirmed",
+    text:"enjoy your show",
+}
+await transporter.sendMail(mail) })
+
+
+const functions = [syncusercreation, syncuserdeletion, syncuserupdate, releaseBooking, deleteoldshowsandbookings];
 
 module.exports = { inngest, functions };

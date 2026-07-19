@@ -1,5 +1,6 @@
 const Stripe = require("stripe");
 const booking = require("../models/booking");
+const { inngest } = require("./inngestfile");
 
 const stripewebhook = async (req, res) => {
     const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -46,6 +47,13 @@ const stripewebhook = async (req, res) => {
                     },
                     { new: true }
                 );
+
+                await inngest.send({
+                    name: "app/send-email",
+                    data: {
+                        bookingId: bookingId,
+                    },
+                });
 
                 break;
             }

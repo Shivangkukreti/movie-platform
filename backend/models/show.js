@@ -10,5 +10,7 @@ let showschema=new Schema({
     occupiedSeats:{type:Object,default:{}},
 },{minimize:false})
 
+showschema.post
+
 let show=mongoose.model("show",showschema)
 module.exports=show
