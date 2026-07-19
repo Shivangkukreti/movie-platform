@@ -115,6 +115,8 @@ const sentemail = inngest.createFunction(
     triggers: [{ event: "app/send-email" }],
   },
   async ({ event }) => {
+    console.log(event);
+    
     const { bookingId } = event.data;
 
     const x = await booking.findById(bookingId).populate("user");
