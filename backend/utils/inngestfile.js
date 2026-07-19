@@ -110,6 +110,7 @@ const deleteoldshowsandbookings = inngest.createFunction(
 
 
 const sentemail = inngest.createFunction(
+    
   {
     id: "send-email",
     triggers: [{ event: "app/send-email" }],
