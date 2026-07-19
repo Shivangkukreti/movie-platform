@@ -7,7 +7,7 @@ const { clerkMiddleware } = require('@clerk/express');
 const mongoose = require('mongoose');
 const { inngest, functions } = require('./utils/inngestfile');
 const { serve } = require("inngest/express");
-
+const stripewebhook = require('./utils/stripewebhook');
 
 const uri = process.env.MONGO_URL; 
 const PORT = process.env.PORT || 5000;
@@ -28,7 +28,7 @@ app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use(clerkMiddleware());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.post('/api/stripe',express.raw({ type: "application/json" }),stripewebhook);
 app.use('/api/show', require('./routes/showroute'));
 app.use('/api/movies', require('./routes/movieroute'));
 app.use('/api/booking', require('./routes/bookingroute'));

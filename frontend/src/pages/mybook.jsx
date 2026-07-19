@@ -26,8 +26,8 @@ function Mybookings() {
                     </div>
                     <div className="flex flex-col justify-center gap-3 items-center">
                         <h3 className="text-lg text-end [word-spacing:0.5em] font-bold">Seats : {x.bookedSeats} ( {x.bookedSeats.length} ) </h3>
-                        <h3 className="text-lg text-end font-bold">Total : ${x.amount}</h3>
-                        {x.isPaid?<p className="text-green-500 font-bold">Paid</p>:<button className="bg-[#007bff] p-2 rounded-2xl font-bold">Pay Now</button>}
+                        <h3 className="text-lg text-end font-bold">Total : ${x.amount.toFixed(2)}</h3>
+                        {x.isPaid?<p className="text-green-500 font-bold">Paid</p>:<button onClick={()=>window.location.href=x.paymentLink} className="bg-[#007bff] p-2 rounded-2xl font-bold">Pay Now</button>}
                     </div>
                 </div>
             ))}

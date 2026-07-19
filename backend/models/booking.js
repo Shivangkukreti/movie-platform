@@ -6,7 +6,7 @@ let sch=new Schema({
     show:{type:String,required:true,ref:'show'},
     amount:{type:Number,required:true},
     bookedSeats:{type:Array,required:true},
-    isPaid:{type:Boolean,default:true},
+    isPaid:{type:Boolean,default:false},
     paymentLink:{type:String,default:""},
 },{timestamps:true})
 
