@@ -91,8 +91,14 @@ const deleteoldshowsandbookings = inngest.createFunction(
     const currentDate = new Date();
 
     const oldShows = await show.find({
-      showDateTime: { $lt: currentDate },
-    });
+  $expr: {
+    $lt: [
+      { $toDate: "$showDateTime" },
+      currentDate
+    ]
+  }
+});
+//i by mistake wrote string in its schema ..due to which i have to convert it to date here to compare with current date
 
     for (const oldShow of oldShows) {
       await booking.deleteMany({
