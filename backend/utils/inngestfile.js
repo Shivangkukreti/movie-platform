@@ -1,7 +1,8 @@
 const { Inngest, cron } = require("inngest");
 const user=require("../models/user");
 const booking = require("../models/booking");
-const nodemailer=require('nodemailer')
+const nodemailer=require('nodemailer');
+const show = require("../models/show");
 // Create a client to send and receive events
 const inngest = new Inngest({ id: "my-app" });
 

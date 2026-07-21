@@ -9,8 +9,10 @@ function Allbook() {
     
      return ( 
         <>
+        
         <h1 className="text-4xl">List <p className="text-rose-600 inline">Bookings</p></h1>
-        <table>
+        <div className="overflow-y-auto h-[calc(100vh-200px)] max-md:h-[calc(100vh-150px)]">
+            <table className="">
             <thead>
                 <tr className="bg-rose-600/30 font-extrabold max-md:text-xs">
                     <td className="p-3 rounded-tl-2xl">Username</td>
@@ -38,6 +40,8 @@ function Allbook() {
                 :<tr><td className="text-center text-gray-500 py-4">No bookings available.</td></tr>}
             </tbody>
         </table>
+        </div>
+        
         </>
      );
 }

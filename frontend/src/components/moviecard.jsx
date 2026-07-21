@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 function Card({ movie }) {
     let goto=useNavigate()
     return ( 
-        <div onClick={()=>goto(`/movies/${movie._id}`)} className=" hover:-translate-y-3 min-w-[20%]  duration-500 z-10 flex flex-col p-2 gap-4 rounded-2xl shadow md:p-4 border border-white/15 ">
-            <img className="rounded-2xl aspect-square max-h-80 object-cover" src={movie.poster_path} alt="" />
+        <div onClick={()=>goto(`/movies/${movie._id}`)} className=" eff hover:-translate-y-3 min-w-[20%]  duration-500 z-10 flex flex-col p-2 gap-4 rounded-2xl shadow md:p-4 border border-white/15 ">
+            <img loading="lazy" className="rounded-2xl aspect-square max-h-80 object-cover" src={movie.poster_path} alt="" />
             <div className="font-bold text-lg">{movie.title} </div>
             <div className="text-gray-600 font-bold inline">
                 {movie.genres.map((ele,index)=>{

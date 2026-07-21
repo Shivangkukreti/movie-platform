@@ -9,6 +9,7 @@ function Listshows() {
     return ( 
         <>
         <h1 className="text-4xl">List <p className="text-rose-600 inline">Shows</p></h1>
+        <div className="overflow-y-auto h-[calc(100vh-200px)] max-md:h-[calc(100vh-150px)]">
         <table>
             <thead>
                 <tr className="bg-rose-600/30 font-extrabold max-md:text-xs">
@@ -35,6 +36,7 @@ function Listshows() {
                 :<tr><td className="text-center text-gray-500 py-4">No shows available.</td></tr>}
             </tbody>
         </table>
+        </div>
         </>
      );
 }
