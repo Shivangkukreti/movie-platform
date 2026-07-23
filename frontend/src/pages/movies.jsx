@@ -14,7 +14,10 @@ function Movies() {
      useEffect(()=>{
           window.scrollTo(0,0)
        },[])
-    return ( 
+       if(allshows===null){
+        return <Loading></Loading>
+       }
+    return  allshows.length > 0 ? (
         
        <div className="flex relative flex-col gap-4 px-[5%] my-20 lg:px-[10%]">
             <h2 className="font-bold text-3xl my-20" >Now Showing</h2>
@@ -29,6 +32,8 @@ function Movies() {
             </div>
              <Blurcircle bottom="0%" right="0%"></Blurcircle>
         </div>
+     ) : (
+        <div className="text-center h-screen mt-70 text-2xl font-bold my-20">No movies are currently showing.</div>
      );
 }
 

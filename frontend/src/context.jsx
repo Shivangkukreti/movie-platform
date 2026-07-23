@@ -9,8 +9,8 @@ import { useEffect } from 'react';
 function Appcontextprovider({children}) {
 
 let api=import.meta.env.VITE_BACKEND_URL
-let [myfav,setmyfav]=useState([])
-let [allshows,setallshows]=useState([])
+let [myfav,setmyfav]=useState(null)
+let [allshows,setallshows]=useState(null)
 let [activeshows,setactiveshows]=useState(null)
 let [allbookings,setallbookings]=useState(null)
 let [dashdata,setdashdata]=useState({totalRevenue:0,totalBookings:0,activeShows:0,totalUsers:0})

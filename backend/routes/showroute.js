@@ -49,7 +49,7 @@ router.get("/nowshowing",async(req,res)=>{
         console.log(x);
         
         let y=new Set()
-        x.forEach(show => {
+        x.forEach(show => {~
             y.add(show.movie);
         });
       

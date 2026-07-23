@@ -66,8 +66,8 @@ function MovieDetail() {
   }, [id, showdate, allshows, activeshows]);
 
   return movie ? (
-    <>
-      <div className=" w-[50%] mx-auto my-20 justify-center duration-500 z-10 flex  p-2 gap-10 rounded-2xl shadow md:p-4  ">
+    <div className="overflow-x-hidden" >
+      <div className=" w-[50%] mx-auto my-20 justify-center duration-500 z-10 flex max-md:flex-wrap  p-2 gap-10 rounded-2xl shadow md:p-4  ">
         <Blurcircle top="10%" left="30%"></Blurcircle>
         <img
           className="rounded-2xl h-120 object-cover"
@@ -77,16 +77,16 @@ function MovieDetail() {
         <div className="flex flex-col gap-5 justify-center">
           <div className="font-bold text-5xl">{movie.title} </div>
           <div className="flex justify-start text-xl font-bold items-center gap-1">
-            {" "}
+           
             <Star color="#f84565" height={15}></Star> {movie.vote_average} User
-            Rating{" "}
+            Rating
           </div>
           <div className="text-gray-600  text-2xl font-bold inline">
             {movie.genres.map((ele, index) => {
               return <span key={index}> {Object.values(ele)} | </span>;
             })}
             <span className="inline">
-              {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m{" "}
+              {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
             </span>
           </div>
           <p className="text-gray-300">{movie.overview} </p>
@@ -139,12 +139,8 @@ function MovieDetail() {
         >
           <Blurcircle top="10%" left="70%"></Blurcircle>
           <div className="font-bold text-xl text-start ">Choose Date</div>
-          <div className="flex gap-3 mt-10 mx-20">
-            {/* <span  className="border-2 rounded cursor-pointer p-2 border-rose-400/20">17 Sept</span>
-                <span className="border-2 rounded cursor-pointer p-2 border-rose-400/20">18 Sept</span>
-                <span className="border-2 rounded cursor-pointer p-2 border-rose-400/20">19 Sept</span>
-                <span className="border-2 rounded cursor-pointer p-2 border-rose-400/20">20 Sept</span>
-                <span className="border-2 rounded cursor-pointer p-2 border-rose-400/20">21 Sept</span> */}
+          <div className="flex overflow-y-auto gap-3 mt-10 max-sm:mx-5 mx-20">
+    
             {uniqueDates?.map((ele, idx) => {
               return (
                 <span
@@ -173,7 +169,7 @@ function MovieDetail() {
           <Featured x="You May Also Like" y="Show More"></Featured>
         </div>
       </div>
-    </>
+    </div>
   ) : (
     <Loading> </Loading>
   );

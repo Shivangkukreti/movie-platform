@@ -82,7 +82,7 @@ let {user,isLoaded}=useUser()
             </NavLink>
           </div>
         </div>
-        <div className="m-10">
+        <div className="m-10 w-[75%]">
           <Outlet></Outlet>
         </div>
       </div>

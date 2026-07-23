@@ -12,6 +12,9 @@ function Favourite() {
           window.scrollTo(0,0)
          
        },[])
+       if(myfav===null){
+        return <Loading></Loading>
+       }
     return myfav.length > 0 ? (
         
        <div className="flex relative flex-col gap-4 px-[5%] my-20 lg:px-[10%]">
@@ -29,7 +32,7 @@ function Favourite() {
              <Blurcircle bottom="0%" right="0%"></Blurcircle>
         </div>
      ) : (
-        <Loading></Loading>
+        <div className="text-center h-screen mt-70 text-2xl font-bold my-20">You haven't liked any movies yet.</div>
      );
 }
 
