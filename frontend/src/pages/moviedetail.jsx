@@ -141,7 +141,7 @@ function MovieDetail() {
           <div className="font-bold text-xl text-start ">Choose Date</div>
           <div className="flex overflow-y-auto gap-3 mt-10 max-sm:mx-5 mx-20">
     
-            {uniqueDates?.map((ele, idx) => {
+            { uniqueDates.length > 0 ? uniqueDates.map((ele, idx) => {
               return (
                 <span
                   onClick={() => setshowdate(ele.showDateTime.slice(0, 10))}
@@ -155,7 +155,7 @@ function MovieDetail() {
                   })}
                 </span>
               );
-            })}
+            }): <span className="text-gray-400 ">Login First</span>}
           </div>
           <button
             onClick={() => (showdate ? goto(`${showdate}`) : toast.error("Please select a date"))}
