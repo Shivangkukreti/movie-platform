@@ -7,15 +7,15 @@ import { useEffect } from "react";
 import Loading from "../components/loading";
 
 function Favourite() {
-    let {myfav,setmyfav}=useContext(Appcontext)
+    let {myfav,setmyfav,user}=useContext(Appcontext)
     useEffect(()=>{
           window.scrollTo(0,0)
          
        },[])
-       if(myfav===null){
+       if(user && myfav===null){
         return <Loading></Loading>
        }
-    return myfav.length > 0 ? (
+    return myfav?.length > 0 ? (
         
        <div className="flex relative flex-col gap-4 px-[5%] my-20 lg:px-[10%]">
             <h2 className="font-bold text-3xl my-20" >You Liked</h2>

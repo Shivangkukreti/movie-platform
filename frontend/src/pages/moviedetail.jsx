@@ -103,7 +103,7 @@ function MovieDetail() {
 
             <Heart
               onClick={() => togglefav(id)}
-              fill={myfav.some((x) => x._id === id) ? "#f84565" : "none"}
+              fill={myfav?.some((x) => x._id === id) ? "#f84565" : "none"}
               color="#f84565"
               height={100}
             ></Heart>
