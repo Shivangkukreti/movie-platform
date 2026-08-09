@@ -79,10 +79,10 @@ function Addshow() {
           return (
             <div
               key={idx}
-              onClick={() => setform((prev) => ({ ...prev, movieid: x.id }))}
+              onClick={() => setform((prev) => ({ ...prev, movieid: x.imdbID }))}
               className={
-                "flex group-hover:opacity-30 hover:scale-95 hover:opacity-100 duration-300 flex-col gap-2 border-rose-600/30 border rounded-xl p-3 shrink-0 max-md:w-40  max-w-60" +
-                (formdata.movieid === x.id ? " bg-rose-600/30 " : "")
+                "flex  group-hover:opacity-30 hover:scale-95 hover:opacity-100 duration-300 flex-col gap-2 border-rose-600/30 border rounded-xl p-3 shrink-0 max-md:w-40  w-60" +
+                (formdata.movieid === x.imdbID ? " bg-rose-600/30 " : "")
               }
             >
               <img
@@ -91,18 +91,18 @@ function Addshow() {
                   x.backdrop_path ||
                   x.backdropUrl ||
                   x.poster_path ||
-                  x.posterUrl
+                  x.Poster
                 }
                 alt=""
               />
-              <p className="font-bold text-center max-md:text-xs max-lg:text-sm text-lg">{x.title}</p>
-              <div className="flex justify-between">
+              <p className="font-bold text-center max-md:text-xs max-lg:text-sm text-lg">{x.Title}</p>
+              <div className="flex max-md:flex-col bottom-0  justify-between">
                 <div className="flex items-center gap-1">
                   <Star color="red" height={15} fill="red"></Star>
-                  <p className="text-sm text-gray-400">{x.vote_average}</p>
+                  <p className="text-sm text-gray-400">{x.imdbRating}</p>
                 </div>
                 <p className="text-sm text-gray-400">
-                  {x.release_date || x.releaseDate}
+                  {x.release_date || x.releaseDate || x.Released}
                 </p>
               </div>
             </div>
@@ -115,7 +115,7 @@ function Addshow() {
           <span className="text-rose-600 font-bold max-md:text-lg text-2xl">
            
             {formdata.movieid
-              ? nowmovies.find((x) => x.id === formdata.movieid)?.title
+              ? nowmovies.find((x) => x.imdbID === formdata.movieid)?.Title
               : ""}
           </span>
         </div>

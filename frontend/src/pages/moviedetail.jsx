@@ -86,7 +86,8 @@ function MovieDetail() {
               return <span key={index}> {Object.values(ele)} | </span>;
             })}
             <span className="inline">
-              {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+              <br />
+              {movie.runtime}
             </span>
           </div>
           <p className="text-gray-300">{movie.overview} </p>

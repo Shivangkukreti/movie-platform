@@ -21,7 +21,8 @@ function Card({ movie }) {
           return <span className="max-md:text-xs" key={index}> {Object.values(ele)} | </span>;
         })}
         <span className="inline">
-          {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m{" "}
+          <br />
+          {movie.runtime }
         </span>
       </div>
 

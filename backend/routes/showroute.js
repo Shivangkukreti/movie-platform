@@ -11,19 +11,19 @@ router.post("/addshow",authcheck, async (req, res) => {
     let x = await movies.findById(movieid);
     if (!x) {
       const response = await fetch(
-        `https://api4devs.com/api/v1/movies/${movieid}`,
+        `https://www.omdbapi.com/?i=${movieid}&apikey=54796620`,
       );
-      let data = await response.json();
-      x = data.movie;
+      let x = await response.json();
+      
       let newmovie = new movies({
-        _id: x.id,
-        title: x.title,
-        overview: x.overview,
-        poster_path: x.posterUrl,
-        backdrop_path: x.backdropUrl,
-        release_date: x.releaseDate,
-        original_language: x.originalLanguage,
-        vote_average: x.voteAverage,
+        _id: x.imdbID,
+        title: x.Title,
+        overview: x.Plot,
+        poster_path: x.Poster,
+        runtime: x.Runtime,
+        release_date: x.Released,
+        original_language: x.Language,
+        vote_average: x.imdbRating,
       });
       await newmovie.save();
     }

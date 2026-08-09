@@ -17,10 +17,10 @@ function Mybookings() {
             <Blurcircle top="10%" left="45%"></Blurcircle>
             {mybookings.map((x,idx) => (
                 <div className="flex max-xl:flex-col justify-evenly gap-2 relative  w-full p-5 bg-red-500/5  border border-red-400/15 rounded-2xl" key={idx}>
-                    <img className="h-30 object-contain rounded-2xl" src={x.show.movie.backdrop_path} alt="" />
+                    <img className="h-30 object-contain rounded-2xl" src={x.show.movie.poster_path} alt="" />
                     <div>
                         <h3 className="text-lg font-bold">{x.show.movie.title}</h3>
-                        <p className="text-lg font-bold text-gray-500">{x.show.movie.runtime} min</p>
+                        <p className="text-lg font-bold text-gray-500">{x.show.movie.runtime} </p>
                         <p className="text-md font-bold text-gray-500">{new Date(x.show.showDateTime).toLocaleString("en", { dateStyle: "medium", timeStyle: "short" })}</p>
 
                     </div>

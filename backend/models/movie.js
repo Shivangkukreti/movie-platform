@@ -7,7 +7,6 @@ let movieSchema = new Schema(
     title: {type: String,required: true,},
     overview: {type: String,required: true,},
     poster_path: {type: String,required: true,},
-    backdrop_path: {type: String,required: true,},
     release_date: {type: String,required: true,},
     original_language: {type: String,},
     genres: {type: Array,default: ["Action", "Adventure", "Fantasy"]},
@@ -99,7 +98,7 @@ let movieSchema = new Schema(
   },
 ]},
     vote_average: {type: Number,required: true,},
-    runtime: {type: Number,default: 128},
+    runtime: {type:String,default: "128 min"},
 },
   {timestamps: true},
 );
