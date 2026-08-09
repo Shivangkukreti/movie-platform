@@ -103,7 +103,7 @@ function Navbar() {
           </UserButton>
         ) : (
           <button
-            className="font-medium text-xl rounded-3xl bg-[#f84565] px-8 py-2"
+            className="font-medium text-xl rounded-3xl bg-[#f84565] sm:px-8 p-2 sm:py-2"
             onClick={() => openSignIn()}
           >
             Login

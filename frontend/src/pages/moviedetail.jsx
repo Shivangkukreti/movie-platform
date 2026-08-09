@@ -66,22 +66,22 @@ function MovieDetail() {
   }, [id, showdate, allshows, activeshows]);
 
   return movie ? (
-    <div className="overflow-x-hidden" >
-      <div className=" w-[50%] mx-auto my-20 justify-center duration-500 z-10 flex max-md:flex-wrap  p-2 gap-10 rounded-2xl shadow md:p-4  ">
+    <div className="overflow-x-hidden relative" >
+      <div className=" md:w-[50%] mx-auto my-20 justify-center  duration-500 z-10 flex max-md:flex-wrap  p-2 gap-10 rounded-2xl shadow md:p-4  ">
         <Blurcircle top="10%" left="30%"></Blurcircle>
         <img
-          className="rounded-2xl h-120 object-cover"
+          className="rounded-2xl h-120  object-cover"
           src={movie.poster_path}
           alt=""
         />
         <div className="flex flex-col gap-5 justify-center">
-          <div className="font-bold text-5xl">{movie.title} </div>
-          <div className="flex justify-start text-xl font-bold items-center gap-1">
+          <div className="font-bold text-5xl max-sm:text-center">{movie.title} </div>
+          <div className="flex justify-start max-sm:justify-center text-xl font-bold items-center gap-1">
            
             <Star color="#f84565" height={15}></Star> {movie.vote_average} User
             Rating
           </div>
-          <div className="text-gray-600  text-2xl font-bold inline">
+          <div className="text-gray-600 max-sm:text-center text-2xl font-bold inline">
             {movie.genres.map((ele, index) => {
               return <span key={index}> {Object.values(ele)} | </span>;
             })}
@@ -90,15 +90,15 @@ function MovieDetail() {
               {movie.runtime}
             </span>
           </div>
-          <p className="text-gray-300">{movie.overview} </p>
-          <div className="flex gap-10 items-center text-xl">
+          <p className="text-gray-300 max-sm:text-center">{movie.overview} </p>
+          <div className="flex gap-10 max-sm:justify-center items-center text-xl">
             <button
               onClick={scrollToCast}
-              className="hover:bg-[#f84565] duration-500 bg-gray-600 p-4 rounded"
+              className="hover:bg-[#f84565] max-sm:text-sm  duration-500 bg-gray-600 sm:p-4 p-2 rounded"
             >
               Buy Tickets
             </button>
-            <button className="hover:bg-[#f84565] duration-500 bg-gray-600 p-4 rounded">
+            <button className="hover:bg-[#f84565]  max-sm:text-sm duration-500 bg-gray-600 sm:p-4 p-2 rounded">
               Watch Trailer
             </button>
 

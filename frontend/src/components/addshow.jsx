@@ -69,7 +69,7 @@ function Addshow() {
   }, []);
 
   return (
-    <div className="flex   flex-col  ">
+    <div className="flex relative overflow-x-hidden  flex-col  ">
       <h1 className="text-4xl">
         Add <p className="text-rose-600 inline">Shows</p>
       </h1>
@@ -119,7 +119,7 @@ function Addshow() {
               : ""}
           </span>
         </div>
-        <div className="flex items-center  gap-2">
+        <div className="flex items-center flex-col  gap-2">
            <label className="flex flex-col gap-2  mt-5 md:mt-10 font-bold justify-center  items-start">
           Show Price :
           <input
@@ -148,7 +148,7 @@ function Addshow() {
        
         <button
           onClick={handlesubmit}
-          className="bg-rose-600 text-white p-4 rounded-xl mt-10"
+          className="bg-rose-600 mx-auto block text-white p-4 rounded-xl mt-10"
         >
           Add Show
         </button>

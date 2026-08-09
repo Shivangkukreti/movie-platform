@@ -20,14 +20,14 @@ function Card({ movie }) {
         {movie.genres.map((ele, index) => {
           return <span className="max-md:text-xs" key={index}> {Object.values(ele)} | </span>;
         })}
-        <span className="inline">
+        <span className="inline max-sm:text-xs font-bold">
           <br />
           {movie.runtime }
         </span>
       </div>
 
       <div className="flex justify-between">
-        <button className="bg-[#f84565] px-4 py-2 max-md:text-sm rounded-3xl">Book Now</button>
+        <button className="bg-[#f84565] sm:px-4 p-1  sm:py-2 max-sm:text-xs max-md:text-sm rounded-3xl">Book Now</button>
         <div className="flex justify-center items-center gap-1">
           {movie.vote_average} <Star color="#f84565" height={15}></Star>{" "}
         </div>

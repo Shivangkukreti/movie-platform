@@ -26,7 +26,7 @@ function Hero() {
           each other to survive, two people meet in London and try to stop a
           conspiracy.
         </p>
-        <button className="flex gap-2 rounded-3xl bg-[#f84565] px-4 py-2 justify-center items-center">
+        <button className="flex gap-2 rounded-3xl bg-[#f84565] sm:px-4 p-2  sm:py-2 justify-center items-center">
           Explore More <ArrowRight></ArrowRight>{" "}
         </button>
       </div>
